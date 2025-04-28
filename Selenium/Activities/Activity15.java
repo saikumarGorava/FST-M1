@@ -1,31 +1,44 @@
-# Import webdriver from selenium
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+package activities;
 
-# Start the Driver
-with webdriver.Firefox() as driver:
-    # Declare the wait variable
-    wait = WebDriverWait(driver, timeout=10)
-    # Navigate to the URL
-    driver.get("https://training-support.net/webelements/dynamic-attributes")
-    # Print the title of the page
-    print("Page title is: ", driver.title)
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-    # Find the input fields
-    fullName = driver.find_element(By.XPATH, "//input[starts-with(@id, 'full-name')]")
-    email = driver.find_element(By.XPATH, "//input[contains(@id, '-email')]")
-    eventDate = driver.find_element(By.XPATH, "//input[contains(@name, '-event-date-')]")
-    details = driver.find_element(By.XPATH, "//textarea[contains(@id, '-additional-details-')]")
-    # Enter the details
-    fullName.send_keys("Raiden Shogun")
-    email.send_keys("raiden@electromail.com")
-    eventDate.send_keys("2025-06-26")
-    details.send_keys("It will be electric!")
-    # Find and click the submit button
-    driver.find_element(By.XPATH, "//button[text()='Submit']").click()
+public class Activity15 {
+    public static void main(String[] args) {
+        // Create a new instance of the Firefox driver
+        WebDriver driver = new FirefoxDriver();
+        // Create the Wait object
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    # Wait for the success message and print it
-    message = wait.until(EC.visibility_of_element_located((By.ID, "action-confirmation"))).text
-    print("Success message: ", message)
+        // Open the page
+        driver.get("https://training-support.net/webelements/dynamic-attributes");
+        // Print the title of the page
+        System.out.println("Page title is: " + driver.getTitle());
+
+        // Find the input fields
+        WebElement fullName = driver.findElement(By.xpath("//input[starts-with(@id, 'full-name')]"));
+        WebElement email = driver.findElement(By.xpath("//input[contains(@id, '-email')]"));
+        WebElement eventDate = driver.findElement(By.xpath("//input[contains(@name, '-event-date-')]"));
+        WebElement details = driver.findElement(By.xpath("//textarea[contains(@id, '-additional-details-')]"));
+        // Enter the details
+        fullName.sendKeys("Priyanka Madishetty");
+        email.sendKeys("priyanka.m@electromail.com");
+        eventDate.sendKeys("2080-06-26");
+        details.sendKeys("It will be electric!");
+        // Find and click the submit button
+        driver.findElement(By.xpath("//button[text()='Submit']")).click();
+
+        // Wait for the success message and print it
+        String message = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("action-confirmation")))
+                .getText();
+        System.out.println("Success message: " + message);
+
+        // Close the browser
+        driver.quit();
+    }
+}
